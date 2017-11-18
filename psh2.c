@@ -19,6 +19,7 @@
 #define MAXARGS 20
 #define ARGLEN  100 
 
+void SIGINT_handler(int);
 int main()
 {
     char * arglist[MAXARGS + 1];
@@ -29,6 +30,8 @@ int main()
 
     numargs = 0;
    
+    signal(SIGINT,SIGINT_handler); /*handle SIGINT signal*/
+
     while(numargs < MAXARGS){
         printf("Arg[%d]?",numargs);
         if(fgets(argbuf,ARGLEN,stdin)&& *argbuf != '\n')
@@ -37,6 +40,8 @@ int main()
             if(numargs >0)
             {
                 arglist[numargs]=NULL;
+                
+
                 execute(arglist);
                 numargs = 0;
             }
@@ -80,3 +85,7 @@ char* makestring(char * buf)
     return cp;
 }
 
+void SIGINT_handler(int signum)
+{
+    ;
+}
