@@ -6,6 +6,8 @@
 #include<stdio.h>
 #include<unistd.h>
 #include<fcntl.h>
+#include<stdlib.h>  /*for exit fuc*/
+
 
 #define BUFFERSIZE 4096
 #define COPYMODE 0644
@@ -28,16 +30,21 @@ int main(int ac, char *av[])
    if(out_fd= creat(av[2],COPYMODE)== -1)
 	    oops("Cannot creat", av[2]);
 
-   while( ( n_chars = read( In_fd, buf , BUFFERSIZE ) )>0 )
+   while( ( n_chars = read( in_fd, buf , BUFFERSIZE ) )>0 )
 	   if( write(out_fd, buf, n_chars) != n_chars )
 		   oops("Write error to ", av[2]);
    
+   if (n_chars == -1)
+       oops("read error from ", av[1]);
    if(close(in_fd) == -1 || close( out_fd) == -1)
         oops("Error closing files ", " ");
    
+
+    return 0;
+
 }
 
-oops(char *s1, char *s2)
+void oops(char *s1, char *s2)
 {
      fprintf(stderr,"error: %s", s1);
 	 perror(s2);
