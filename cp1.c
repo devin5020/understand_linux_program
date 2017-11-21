@@ -20,14 +20,14 @@ int main(int ac, char *av[])
    char buf[BUFFERSIZE];
 
    if( ac !=3){
-       fprintf(stderr,"usage :%s soruce destination\n", *av);
+       fprintf(stderr,"usage: %s source destination\n", *av);
 	   exit(1);
    }
 
    if((in_fd=open(av[1],O_RDONLY)) == -1)
 	   oops("Cannot open", av[1]);
 
-   if(out_fd= creat(av[2],COPYMODE)== -1)
+   if((out_fd= creat(av[2],COPYMODE))== -1)
 	    oops("Cannot creat", av[2]);
 
    while( ( n_chars = read( in_fd, buf , BUFFERSIZE ) )>0 )
@@ -35,7 +35,7 @@ int main(int ac, char *av[])
 		   oops("Write error to ", av[2]);
    
    if (n_chars == -1)
-       oops("read error from ", av[1]);
+       oops("Read error from ", av[1]);
    if(close(in_fd) == -1 || close( out_fd) == -1)
         oops("Error closing files ", " ");
    
