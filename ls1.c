@@ -23,6 +23,10 @@ int main(int ac ,char *av[])
    return 0;
 }
 
+/*dirent from dirent.h  
+ *include dir name
+
+*/
 void do_ls(char dirname[])
 {
    DIR *dir_ptr;
