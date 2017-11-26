@@ -1,6 +1,5 @@
 /* fileinfo.c list conents of directorys
- * usage : ls
-           ls dir
+ * usage : file_info xx(filename)
  *
  */
 
