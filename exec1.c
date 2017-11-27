@@ -1,5 +1,5 @@
 /*************************************************************************
-	> File Name: exec1.c
+	> File Name: exec1.c  execvp func 
 	> Author: 
 	> Mail: 
 	> Created Time: Sat 11 Nov 2017 06:33:09 AM CST
