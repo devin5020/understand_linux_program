@@ -7,17 +7,20 @@
 #include<sys/stat.h>
 #include<dirent.h>
 
-#define BUFSIZE  1024
+#define BUFSIZE  256
+
+#include <string.h>
 
 void printpathto(ino_t this_inode);
-void inum_to_name(ino_t inode_to_find, char * namebuf, itn buflen);
+void inum_to_name(ino_t inode_to_find, char * namebuf, int buflen);
 ino_t get_inode(char * fname);
 
 int main()
 {
 	printpathto(get_inode("."));   /* print path to here*/
-	putchar("\n");                 /*then add new line*/
+	/* putchar('\n');                 /*then add new line*/
 
+        printf("\n");
 	return 0;
 }
 
@@ -25,9 +28,12 @@ void printpathto(ino_t this_inode)
 {
 	ino_t my_inode;
 	char its_name[BUFSIZE];
-	if(get_inode(this_node, its_name, BUFSIZE) != this_inode)
+	if(get_inode(this_inode) != this_inode)
 	{
-	my_inode = get_inode(".");
+        chdir("..");
+	
+        inum_to_name (this_inode, its_name, BUFSIZE);
+        my_inode = get_inode(".");
 	printpathto(my_inode);
 	printf("%s\n", its_name);
 	}
@@ -35,7 +41,7 @@ void printpathto(ino_t this_inode)
 }
 
 
-void inum_to_name(ino_t inode_to_find, char * namebuf, itn buflen)
+void inum_to_name(ino_t inode_to_find, char * namebuf, int buflen)
 {
     DIR *dir_ptr;
 	struct dirent * direntp;
@@ -47,18 +53,18 @@ void inum_to_name(ino_t inode_to_find, char * namebuf, itn buflen)
     while ((direntp = readdir(dir_ptr)) != NULL)
 		if(direntp -> d_ino == inode_to_find)
 		{
-			strcpy(namebuf, direntp -> d_name, buflen);
+			strncpy(namebuf, direntp->d_name, buflen);
 			namebuf[buflen-1] = '\0'; /*just in case*/
 			closedir(dir_ptr);
 			return ;
 		}
-	fprintf(stderr,"error looking for inum %d\n", inode_to_find);
+	fprintf(stderr,"error looking for lsinum %d\n", inode_to_find);
 	exit(1);
 }
 
 ino_t get_inode(char * fname)
 {
-	struct stat_info;
+	struct stat info;
 	if(stat(fname, &info) == -1)
 	{
 		fprintf(stderr,"cannot stat");
