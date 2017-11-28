@@ -7,6 +7,12 @@
 #include<sys/stat.h>
 #include<dirent.h>
 
+#define BUFSIZE  1024
+
+void printpathto(ino_t this_inode);
+void inum_to_name(ino_t inode_to_find, char * namebuf, itn buflen);
+ino_t get_inode(char * fname);
+
 int main()
 {
 	printpathto(get_inode("."));   /* print path to here*/
