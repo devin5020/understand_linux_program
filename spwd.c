@@ -6,6 +6,8 @@
 #include<sys/types.h>
 #include<sys/stat.h>
 #include<dirent.h>
+#include<stdlib.h>/*exit function*/
+#include<unistd.h>
 
 #define BUFSIZE  256
 
@@ -28,14 +30,14 @@ void printpathto(ino_t this_inode)
 {
 	ino_t my_inode;
 	char its_name[BUFSIZE];
-	if(get_inode(this_inode) != this_inode)
+	if(get_inode("..") != this_inode)
 	{
         chdir("..");
 	
         inum_to_name (this_inode, its_name, BUFSIZE);
         my_inode = get_inode(".");
 	printpathto(my_inode);
-	printf("%s\n", its_name);
+	printf("/%s", its_name);
 	}
 
 }
