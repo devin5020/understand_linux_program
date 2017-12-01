@@ -9,7 +9,7 @@
 #include<stdlib.h>/*exit function*/
 #include<unistd.h>
 
-#define BUFSIZE  256
+#define BUFSIZ
 
 #include <string.h>
 
@@ -29,7 +29,7 @@ int main()
 void printpathto(ino_t this_inode)
 {
 	ino_t my_inode;
-	char its_name[BUFSIZE];
+	char its_name[BUFSIZ];
 	if(get_inode("..") != this_inode)
 	{
         chdir("..");
